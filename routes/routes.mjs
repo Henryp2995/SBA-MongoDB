@@ -1,23 +1,43 @@
-import express from 'express'
-import db from '../db/conn.mjs'
-import { ObjectId } from 'mongodb'
+import express from 'express';
+import db from '../db/conn.mjs';
+import { ObjectId } from 'mongodb'; // Import ObjectId from the mongodb package
 
-const router = express.Router()
+const router = express.Router();
 
-// GET route to fetch data from MongoDB
-router.get('/', async (req, res) => {
+// GET route for the root path to display a welcome message
+router.get("/", (req, res) => {
+    res.send("Welcome to the API.");
+});
+
+// GET route for fetching all customers with a limit of 20
+router.get("/customers", async (req, res) => {
     try {
-        // Assuming 'collectionName' is the name of your MongoDB collection
-        const data = await db.collection('sample analytics').find().toArray();
-        res.json(data);
+        // Fetch customers from the 'customers' collection with a limit of 20
+        const customers = await db.collection('customers').find().limit(20).toArray();
+        
+        // Send the retrieved customers as a response
+        res.json(customers);
     } catch (error) {
-        console.error('Error fetching data:', error);
+        // Handle any errors
+        console.error('Error fetching customers:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
+// GET route for fetching a single customer by ID
+router.get("/customers/:id", async (req, res) => {
+    try {
+        let collection = await db.collection("customers");
+        let query = { _id: new ObjectId(req.params.id) };
+        let result = await collection.findOne(query);
+    
+        if (!result) res.send("Not found").status(404);
+        else res.send(result).status(200);
+    } catch (error) {
+        // Handle any errors
+        console.error('Error fetching customer:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
-
-
-
-export default router
+export default router;

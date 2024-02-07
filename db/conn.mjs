@@ -19,8 +19,7 @@ async function connectedToDb() {
         // Create MongoDB indexes
         await createIndexes();
 
-        // Create collections with validation rules
-        await createCollectionsWithValidation();
+        console.log('Setup completed successfully');
     } catch (error) {
         console.error('Error connecting to the database', error);
         process.exit(1);
@@ -29,46 +28,17 @@ async function connectedToDb() {
 
 async function createIndexes() {
     try {
-        // Create index on the 'fieldName' field of the 'sample_analytics' collection
-        await db.collection('sample_analytics').createIndex({ fieldName: 1 });
+        // Create index on the '_id' field of the 'sample_analytics' collection
+        await db.collection('sample_analytics').createIndex({ _id: 1 });
         console.log('MongoDB indexes created');
     } catch (error) {
         console.error('Error creating MongoDB indexes', error);
-        process.exit(1);
+        // Don't exit the process if index creation fails
+        // process.exit(1);
     }
 }
 
-async function createCollectionsWithValidation() {
-    try {
-        // Create 'sample_analytics' collection with validation rules
-        await db.createCollection('sample_analytics', {
-            validator: {
-                $jsonSchema: {
-                    bsonType: 'object',
-                    required: ['name'],
-                    properties: {
-                        name: {
-                            bsonType: 'string',
-                            description: 'must be a string and is required'
-                        },
-                        age: {
-                            bsonType: 'int',
-                            minimum: 18,
-                            description: 'must be an integer and is required'
-                        }
-                        // Add more validation rules as needed
-                    }
-                }
-            }
-        });
-        console.log('Collections with validation rules created');
-    } catch (error) {
-        console.error('Error creating collections with validation rules', error);
-        process.exit(1);
-    }
-}
-
-connectedToDb();
+// Ensure that connectedToDb() is called before exporting db
+await connectedToDb();
 
 export default db;
-
