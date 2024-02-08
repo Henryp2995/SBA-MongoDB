@@ -1,4 +1,5 @@
 
+
 ## Usage
 
 - Access the API at `http://localhost:3000`
@@ -46,10 +47,3 @@
 - Description: Updates a customer by ID.
 - Example: `PATCH /customers/60c8dd1e3831320015e48b24`
 
-## Credits
-
-This API was created by [Your Name].
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
