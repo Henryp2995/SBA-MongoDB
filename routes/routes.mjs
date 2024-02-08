@@ -15,7 +15,6 @@ router.get("/customers", async (req, res) => {
         // Fetch customers from the 'customers' collection with a limit of 20
         const customers = await db.collection('customers').find().limit(20).toArray();
         
-        // Send the retrieved customers as a response
         res.json(customers);
     } catch (error) {
         // Handle any errors
@@ -30,7 +29,6 @@ router.get("/accounts", async (req, res) => {
         // Fetch customers from the 'customers' collection with a limit of 20
         const accounts= await db.collection('accounts').find().limit(20).toArray();
         
-        // Send the retrieved customers as a response
         res.json(accounts);
     } catch (error) {
         // Handle any errors
@@ -45,10 +43,9 @@ router.get("/transactions", async (req, res) => {
         // Fetch customers from the 'customers' collection with a limit of 20
         const transactions = await db.collection('transactions').find().limit(20).toArray();
         
-        // Send the retrieved transactions as a response
         res.json(transactions);
     } catch (error) {
-        // Handle any errors
+      
         console.error('Error fetching transactions:', error);
         res.status(500).send('Internal Server Error');
     }
@@ -78,5 +75,30 @@ router.delete("/:id", async (req, res) => {
     })
     
   });
+
+// Create a new customer 
+
+router.post('/', async (req,res) =>{
+    let collection = await db.collection('customers')
+    let newDocument = req.body
+
+    
+    let result = await collection.insertOne(newDocument)
+    res.send(result).status(204)
+})
+
+//Update a customer ID
+router.patch("/customers/:id", async (req, res) => {
+    let collection = await db.collection("grades")
+    let query = { class_id: Number(req.params.id) }
+  
+    let result = await collection.updateMany(query, {
+      $set: { class_id: req.body.class_id }
+    })
+  
+    if (!result) res.send("Not found").status(404)
+    else res.send(result).status(200)
+  })
+
 
 export default router;
