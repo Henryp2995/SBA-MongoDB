@@ -24,6 +24,36 @@ router.get("/customers", async (req, res) => {
     }
 });
 
+//Get route for accounts
+router.get("/accounts", async (req, res) => {
+    try {
+        // Fetch customers from the 'customers' collection with a limit of 20
+        const accounts= await db.collection('accounts').find().limit(20).toArray();
+        
+        // Send the retrieved customers as a response
+        res.json(accounts);
+    } catch (error) {
+        // Handle any errors
+        console.error('Error fetching accounts:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+//Get route for transactions
+router.get("/transactions", async (req, res) => {
+    try {
+        // Fetch customers from the 'customers' collection with a limit of 20
+        const transactions = await db.collection('transactions').find().limit(20).toArray();
+        
+        // Send the retrieved transactions as a response
+        res.json(transactions);
+    } catch (error) {
+        // Handle any errors
+        console.error('Error fetching transactions:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 // GET route for fetching a single customer by ID
 router.get("/customers/:id", async (req, res) => {
     try {
@@ -39,5 +69,14 @@ router.get("/customers/:id", async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+// Delete a single customer
+router.delete("/:id", async (req, res) => {
+    await customers.findByIdAndDelete(req.params.id)
+    res.status(204).json({
+      data: "Item was deleted"
+    })
+    
+  });
 
 export default router;
