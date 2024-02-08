@@ -1,4 +1,3 @@
-// conn.mjs
 
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
@@ -33,12 +32,10 @@ async function createIndexes() {
         console.log('MongoDB indexes created');
     } catch (error) {
         console.error('Error creating MongoDB indexes', error);
-        // Don't exit the process if index creation fails
-        // process.exit(1);
+     
     }
 }
 
-// Ensure that connectedToDb() is called before exporting db
 await connectedToDb();
 
 export default db;

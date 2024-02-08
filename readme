@@ -1,0 +1,55 @@
+
+## Usage
+
+- Access the API at `http://localhost:3000`
+- Use routes like `/customers`, `/accounts`, and `/transactions` to interact with the data.
+
+## Routes
+
+### GET /
+
+- Description: Displays a welcome message.
+- Example: `GET /`
+
+### GET /customers
+
+- Description: Retrieves a list of customers.
+- Example: `GET /customers`
+
+### GET /accounts
+
+- Description: Retrieves a list of accounts.
+- Example: `GET /accounts`
+
+### GET /transactions
+
+- Description: Retrieves a list of transactions.
+- Example: `GET /transactions`
+
+### GET /customers/:id
+
+- Description: Retrieves a single customer by ID.
+- Example: `GET /customers/60c8dd1e3831320015e48b24`
+
+### DELETE /:id
+
+- Description: Deletes a single customer by ID.
+- Example: `DELETE /customers/60c8dd1e3831320015e48b24`
+
+### POST /
+
+- Description: Creates a new customer.
+- Example: `POST /`
+
+### PATCH /customers/:id
+
+- Description: Updates a customer by ID.
+- Example: `PATCH /customers/60c8dd1e3831320015e48b24`
+
+## Credits
+
+This API was created by [Your Name].
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details.
